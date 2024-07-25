@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue</title>
+  </head>
+  <body>
+    <input type="text" id="text" />
+    <button  onclick="sendMessage()">send</button>
+    <ul class="messages"></ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+
+      const wrapper = document.querySelector(".messages");
+
+      const addMEssage = (msg) => {
+        const li = document.createElement("li");
+        li.textContent = msg
+        wrapper.append(li);
+      };
+
+      const sendMessage = () => {
+        socket.emit("message", document.querySelector("#text").value);
+      };
+
+      socket.on("newMessage", addMEssage);
+    </script>
+  </body>
+</html>
