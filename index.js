@@ -7,57 +7,31 @@ app.use(cors());
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-app.get("/cards", (req, res) => {
-  const rawdata = fs.readFileSync("./data/cards.json");
-  const cards = JSON.parse(rawdata);
-  res.send({ cards });
+app.get("/messages", (req, res) => {
+  const rawdata = fs.readFileSync("./data/messages.json");
+  const messages = JSON.parse(rawdata);
+  res.send({ messages });
 });
 
-app.post("/cards", (req, res) => {
-  const { title, text, image, type } = req.body;
+app.post("/messages", (req, res) => {
+  const { sender ,text, date } = req.body;
 
-  const rawdata = fs.readFileSync("./data/cards.json");
-  const cards = JSON.parse(rawdata);
-  console.log(cards);
+  const rawdata = fs.readFileSync("./data/messages.json");
+  const messages = JSON.parse(rawdata);
+  messages.push({ sender, text, date });
+  console.log(messages);
   console.log(rawdata);
 
-  cards.push({ title, text, image, type });
-  fs.writeFileSync("./data/cards.json", JSON.stringify(cards, null, 2));
+  messages.push({ title, text, image, type });
+  fs.writeFileSync("./data/messages.json", JSON.stringify(messages));
 
-  res.send({ title, text, image, type });
+  res.send({ sender, text, date });
 });
 
-app.put("/cards", (req, res) => {
-  const cards = req.body
+app.put("/messages", (req, res) => {
+  const messages = req.body
 
-  fs.writeFileSync("./data/cards.json", JSON.stringify(cards, null, 2));
-
-  res.status(200).send({message: "Все готово"})
-})
-app.get("/tops", (req, res) => {
-  const rawdata = fs.readFileSync("./data/tops.json");
-  const tops = JSON.parse(rawdata);
-  res.send({ tops });
-});
-
-app.post("/tops", (req, res) => {
-  const { title, text, image, type } = req.body;
-
-  const rawdata = fs.readFileSync("./data/tops.json");
-  const tops = JSON.parse(rawdata);
-  console.log(tops);
-  console.log(rawdata);
-
-  tops.push({ title, text, image, type });
-  fs.writeFileSync("./data/tops.json", JSON.stringify(tops, null, 2));
-
-  res.send({ title, text, image, type });
-});
-
-app.put("/tops", (req, res) => {
-  const tops = req.body
-
-  fs.writeFileSync("./data/tops.json", JSON.stringify(tops, null, 2));
+  fs.writeFileSync("./data/messages.json", JSON.stringify(messages, null, 2));
 
   res.status(200).send({message: "Все готово"})
 })
