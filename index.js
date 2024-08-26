@@ -1,3 +1,5 @@
+import { get, post } from "/src/routes/router"
+
 const express = import("express");
 const cors = import("cors");
 const fs = import("fs");
@@ -7,33 +9,9 @@ app.use(cors());
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-app.get("/messages", (req, res) => {
-  try {
-    const rawdata = fs.readFileSync("./data/messages.json");
-    const messages = JSON.parse(rawdata);
-    res.send(messages);
-  } catch (err) {
-    console.error("Error reading messages.json:", err);
-    res.status(500).send({ error: "Failed to read messages." });
-  }
-});
+app.get("/messages", get);
 
-app.post("/messages", (req, res) => {
-    try {
-      const { sender, text, date } = req.body;
-      if (!sender || !text || !date) {
-        return res.status(400).send({ error: "Missing required fields" });
-      }
-      const rawdata = fs.readFileSync("./data/messages.json");
-      const messages = JSON.parse(rawdata);
-      messages.push({ sender, text, date });
-      fs.writeFileSync("./data/messages.json", JSON.stringify(messages, null, 2));
-      res.send({ sender, text, date });
-    } catch (err) {
-      console.error("Error processing request:", err);
-      res.status(500).send({ error: "Failed to save the message." });
-    }
-  });
+app.post("/messages", post);
 
 app.put("/messages", (req, res) => {
   try {
