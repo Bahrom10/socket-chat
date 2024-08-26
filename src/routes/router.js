@@ -1,5 +1,6 @@
 const get = (req, res) => {
     try {
+        res.send(req.query);
         const rawdata = fs.readFileSync("./data/messages.json");
         const messages = JSON.parse(rawdata);
         res.send(messages);
@@ -11,7 +12,6 @@ const get = (req, res) => {
 
 const post = (req, res) => {
     try {
-        res.send(req.query);
         const { sender, text, date } = req.body;
         if (!sender || !text || !date) {
             return res.status(400).send({ error: "Missing required fields" });
