@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.get("/messages", (req, res) => {
   const rawdata = fs.readFileSync("./data/messages.json");
   const messages = JSON.parse(rawdata);
-  res.send({ messages });
+  res.send(messages);
 });
 
 app.post("/messages", (req, res) => {
