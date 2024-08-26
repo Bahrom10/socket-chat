@@ -14,19 +14,14 @@ app.get("/messages", (req, res) => {
 });
 
 app.post("/messages", (req, res) => {
-  const { sender ,text, date } = req.body;
-
-  const rawdata = fs.readFileSync("./data/messages.json");
-  const messages = JSON.parse(rawdata);
-  messages.push({ sender, text, date });
-  console.log(messages);
-  console.log(rawdata);
-
-  messages.push({ title, text, image, type });
-  fs.writeFileSync("./data/messages.json", JSON.stringify(messages));
-
-  res.send({ sender, text, date });
-});
+    const { sender, text, date } = req.body;
+    const rawdata = fs.readFileSync("./data/messages.json");
+    const messages = JSON.parse(rawdata);
+    messages.push({ sender, text, date });
+    console.log(messages);
+    fs.writeFileSync("./data/messages.json", JSON.stringify(messages, null, 2));
+    res.send({ sender, text, date });
+  });
 
 app.put("/messages", (req, res) => {
   const messages = req.body
