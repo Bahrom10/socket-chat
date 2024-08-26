@@ -19,26 +19,21 @@ app.get("/messages", (req, res) => {
 });
 
 app.post("/messages", (req, res) => {
-  try {
-    const { sender, text, date } = req.body;
-
-    // Check if the required fields are provided
-    if (!sender || !text || !date) {
-      return res.status(400).send({ error: "Missing required fields: sender, text, date" });
+    try {
+      const { sender, text, date } = req.body;
+      if (!sender || !text || !date) {
+        return res.status(400).send({ error: "Missing required fields" });
+      }
+      const rawdata = fs.readFileSync("./data/messages.json");
+      const messages = JSON.parse(rawdata);
+      messages.push({ sender, text, date });
+      fs.writeFileSync("./data/messages.json", JSON.stringify(messages, null, 2));
+      res.send({ sender, text, date });
+    } catch (err) {
+      console.error("Error processing request:", err);
+      res.status(500).send({ error: "Failed to save the message." });
     }
-
-    const rawdata = fs.readFileSync("./data/messages.json");
-    const messages = JSON.parse(rawdata);
-
-    messages.push({ sender, text, date });
-    fs.writeFileSync("./data/messages.json", JSON.stringify(messages, null, 2));
-
-    res.send({ sender, text, date });
-  } catch (err) {
-    console.error("Error writing to messages.json:", err);
-    res.status(500).send({ error: "Failed to save the message." });
-  }
-});
+  });
 
 app.put("/messages", (req, res) => {
   try {
