@@ -1,4 +1,4 @@
-import { get, post } from "/src/routes/router"
+import { get, post, put } from "/src/routes/router"
 
 const express = import("express");
 const cors = import("cors");

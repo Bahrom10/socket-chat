@@ -39,4 +39,4 @@ const put = (req, res) => {
     }
 };
 
-export { get, post };
+export { get, post, put };
