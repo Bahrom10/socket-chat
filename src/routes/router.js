@@ -31,7 +31,7 @@ const put = (req, res) => {
         if (!messages) {
             return res.status(400).send({ error: "Missing required fields" });
         }
-        fs.writeFileSync("./data/messages.json", JSON.stringify(messages, null, 2));
+        fs.writeFileSync("./data/messages.json", messages);
         res.send(messages);
     } catch (err) {
         console.error("Error processing request:", err);
