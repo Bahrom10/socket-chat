@@ -29,6 +29,12 @@ app.put("/messages", (req, res) => {
   }
 });
 
+app.options('/messages', (req, res) => {
+  const sender = req.query.sender; // Accessing the query parameter 'sender'
+  const date = req.query.date;     // Accessing the query parameter 'date'
+  res.send(`Sender: ${sender}, Date: ${date}`);
+});
+
 app.listen(PORT, () => {
   console.log("Server started on port", PORT);
 });
