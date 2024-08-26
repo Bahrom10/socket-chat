@@ -27,11 +27,11 @@ const post = (req, res) => {
 };
 const put = (req, res) => {
     try {
-        const messages = req.body;
+        const messages = JSON.parse(req.body);
         if (!messages) {
             return res.status(400).send({ error: "Missing required fields" });
         }
-        fs.writeFileSync("./data/messages.json", messages);
+        fs.writeFileSync("./data/messages.json", JSON.stringify(messages));
         res.send(messages);
     } catch (err) {
         console.error("Error processing request:", err);
