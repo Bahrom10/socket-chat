@@ -11,7 +11,6 @@ const get = (req, res) => {
 
 const post = (req, res) => {
     try {
-        res.send(req.params);
         const { sender, text, date } = req.body;
         if (!sender || !text || !date) {
             return res.status(400).send({ error: "Missing required fields" });
