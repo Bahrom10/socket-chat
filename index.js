@@ -12,6 +12,8 @@ app.get("/messages", get);
 
 app.post("/messages", post);
 
+app.put("messages", put);
+
 
 app.listen(PORT, () => {
   console.log("Server started on port", PORT);
